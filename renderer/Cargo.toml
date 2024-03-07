@@ -1,0 +1,20 @@
+[package]
+name = "renderer"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+routing = { path = "../routing" }
+
+anyhow = "1.0"
+image = "0.24"
+
+skia-safe = { version = "0.71", features = ["gl"] }
+
+winit = "0.29"
+glutin-winit = "0.4"
+
+gl = "0.6"
+glutin = "0.31"
+
+raw-window-handle = "0.5"
