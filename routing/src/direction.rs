@@ -143,8 +143,8 @@ impl Axis {
 
     pub fn degrees(&self) -> f32 {
         match self {
-            Self::Horizontal => 90.0,
-            Self::Vertical   => 0.0,
+            Self::Horizontal => 0.0,
+            Self::Vertical   => 90.0,
         }
     }
 }
