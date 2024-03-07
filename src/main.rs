@@ -54,39 +54,39 @@ fn intersection(dirs: HashMap<Direction, Vec<Cardinal>>) -> TileDirection {
 
 fn main() -> Result<()> {
     let tiles = TileMap::new(vec![
-        tile((5, -3), straight(Down)),
-        tile((5, -2), straight(Down)),
-        tile((5, -1), straight(Down)),
-        tile((5,  0), straight(Down)),
-        tile((5,  3), straight(Down)),
-        tile((5,  4), straight(Down)),
-        tile((5,  5), straight(Down)),
-        tile((5,  6), straight(Down)),
-        tile((5,  7), straight(Down)),
+        tile((6, -3), straight(Down)),
+        tile((6, -2), straight(Down)),
+        tile((6, -1), straight(Down)),
+        tile((6,  0), straight(Down)),
+        tile((6,  3), straight(Down)),
+        tile((6,  4), straight(Down)),
+        tile((6,  5), straight(Down)),
+        tile((6,  6), straight(Down)),
+        tile((6,  7), straight(Down)),
 
-        tile((6, -3), straight(Up)),
-        tile((6, -2), straight(Up)),
-        tile((6, -1), straight(Up)),
-        tile((6,  0), straight(Up)),
-        tile((6,  3), straight(Up)),
-        tile((6,  4), straight(Up)),
-        tile((6,  5), straight(Up)),
-        tile((6,  6), straight(Up)),
-        tile((6,  7), straight(Up)),
+        tile((7, -3), straight(Up)),
+        tile((7, -2), straight(Up)),
+        tile((7, -1), straight(Up)),
+        tile((7,  0), straight(Up)),
+        tile((7,  3), straight(Up)),
+        tile((7,  4), straight(Up)),
+        tile((7,  5), straight(Up)),
+        tile((7,  6), straight(Up)),
+        tile((7,  7), straight(Up)),
 
-        tile((5, 1), intersection!(
+        tile((6, 1), intersection!(
             Straight(Left) => vec![Left],
             Straight(Down) => vec![Down, Left],
         )),
-        tile((6, 1), intersection!(
+        tile((7, 1), intersection!(
             Straight(Left) => vec![Left, Up],
             Straight(Up)   => vec![Up],
         )),
-        tile((5, 2), intersection!(
+        tile((6, 2), intersection!(
             Straight(Right) => vec![Right, Down],
             Straight(Down)  => vec![Down],
         )),
-        tile((6, 2), intersection!(
+        tile((7, 2), intersection!(
             Straight(Right) => vec![Right],
             Straight(Up)    => vec![Up, Right],
         )),
@@ -98,7 +98,7 @@ fn main() -> Result<()> {
         tile((2,  1), straight(Left)),
         tile((3,  1), straight(Left)),
         tile((4,  1), straight(Left)),
-        tile((7,  1), straight(Left)),
+        tile((5,  1), straight(Left)),
         tile((8,  1), straight(Left)),
         tile((9,  1), straight(Left)),
         tile((10, 1), straight(Left)),
@@ -114,7 +114,7 @@ fn main() -> Result<()> {
         tile((2,  2), straight(Right)),
         tile((3,  2), straight(Right)),
         tile((4,  2), straight(Right)),
-        tile((7,  2), straight(Right)),
+        tile((5,  2), straight(Right)),
         tile((8,  2), straight(Right)),
         tile((9,  2), straight(Right)),
         tile((10, 2), straight(Right)),
@@ -126,14 +126,14 @@ fn main() -> Result<()> {
 
     let possible = [
         Vehicle::new(
-            Point2::new(5.0 * TILE_SIZE_F, -3.0 * TILE_SIZE_F),
+            Point2::new(6.0 * TILE_SIZE_F, -3.0 * TILE_SIZE_F),
             8.0,
             rand::thread_rng().gen_range(2.0..10.0),
             &tiles,
         ),
 
         Vehicle::new(
-            Point2::new(6.0 * TILE_SIZE_F, 7.0 * TILE_SIZE_F),
+            Point2::new(7.0 * TILE_SIZE_F, 7.0 * TILE_SIZE_F),
             8.0,
             rand::thread_rng().gen_range(2.0..10.0),
             &tiles,
@@ -161,7 +161,7 @@ fn main() -> Result<()> {
             .collect();
 
     let mut stoplights = vec![
-        Stoplight::new(Point2::new(5.5, 1.5), 10.0),
+        Stoplight::new(Point2::new(6.5, 1.5), 10.0),
     ];
 
     let (mut renderer, event_loop) = Renderer::new()?;
