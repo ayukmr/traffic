@@ -9,5 +9,6 @@ renderer = { path = "renderer" }
 
 nalgebra = "0.32"
 winit    = "0.29"
-rand     = "0.8"
-anyhow   = "1.0"
+
+rand    = "0.8"
+anyhow  = "1.0"
