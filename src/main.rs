@@ -18,8 +18,6 @@ use anyhow::Result;
 
 use std::collections::HashMap;
 
-const MAX_VEHICLES: usize = 35;
-
 macro_rules! intersection {
     ( $( $key:expr => $val:expr ),* $( , )? ) => {{
          let mut map = HashMap::new();
@@ -209,7 +207,7 @@ fn main() -> Result<()> {
                         }
                     });
 
-                    if time % 60 == 0 && vehicles.len() < MAX_VEHICLES {
+                    if time % 60 == 0 {
                         let chosen =
                             *possible.choose(&mut rand::thread_rng()).unwrap();
 
