@@ -36,7 +36,7 @@ impl Vehicle {
                 tile_pos: tile.pos,
             }
         } else {
-            panic!("vehicle on intersection: illegal!");
+            panic!("vehicle started on intersection");
         }
     }
 
