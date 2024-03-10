@@ -1,6 +1,7 @@
 use crate::bounds::Bounds;
 use crate::rect_bounds::RectBounds;
 use crate::direction::{TileDirection, Direction};
+use crate::stop_sign::StopSign;
 use crate::stoplight::Stoplight;
 use crate::tile::Tile;
 use crate::tile_map::{TileMap, TILE_SIZE_F};
@@ -48,6 +49,7 @@ impl Vehicle {
         &mut self,
         vehicles:   &[&Vehicle],
         tiles:      &TileMap<Tile>,
+        stop_signs: &[StopSign],
         stoplights: &[Stoplight],
     ) -> Result<()> {
         let cur_tile = tiles.at_pos(&self.pos).context("")?;
@@ -71,7 +73,7 @@ impl Vehicle {
         }
 
         self.speed +=
-            if self.should_slow(vehicles, stoplights) {
+            if self.should_slow(vehicles, stop_signs, stoplights) {
                 BRAKE
             } else {
                 ACCEL
@@ -83,8 +85,19 @@ impl Vehicle {
         Ok(())
     }
 
-    pub fn should_slow(&self, vehicles: &[&Vehicle], stoplights: &[Stoplight]) -> bool {
-        let collider = RectBounds::collider(&self.pos, self.length, self.speed, self.dir);
+    pub fn should_slow(
+        &self,
+        vehicles:   &[&Vehicle],
+        stop_signs: &[StopSign],
+        stoplights: &[Stoplight],
+    ) -> bool {
+        let collider =
+            RectBounds::collider(
+                &self.pos,
+                self.length,
+                self.speed,
+                self.dir,
+            );
 
         let collisions =
             vehicles.iter().any(|vehicle| {
@@ -92,27 +105,30 @@ impl Vehicle {
                 collider.colliding(&bounds)
             });
 
+        let stop_signs =
+            stop_signs.iter().any(|stop_sign| {
+                stop_sign.colliding(self.tile_pos, &collider)
+            });
+
         let stoplights =
             stoplights.iter().any(|stoplight| {
-                let on_axis = self.dir.out_dir().on_axis(&stoplight.axis);
+                let on_axis =
+                    self.dir.out_dir().on_axis(&stoplight.axis);
+
+                let bounds = stoplight.bounds();
 
                 if stoplight.grace_period() {
-                    let bounds = stoplight.all_bounds();
-
-                    collider.colliding(&bounds.0) ||
-                        collider.colliding(&bounds.1) ||
-                        collider.colliding(&bounds.2) ||
-                        collider.colliding(&bounds.3)
+                    bounds.colliding(&collider)
                 } else {
-                    let bounds = stoplight.bounds();
+                    let axis_bounds = bounds.opp_axis(stoplight.axis);
 
                     !on_axis && (
-                        collider.colliding(&bounds.0) ||
-                        collider.colliding(&bounds.1)
+                        collider.colliding(axis_bounds.0) ||
+                        collider.colliding(axis_bounds.1)
                     )
                 }
             });
 
-        collisions || stoplights
+        collisions || stop_signs || stoplights
     }
 }

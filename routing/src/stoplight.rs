@@ -1,5 +1,5 @@
+use crate::dir_bounds::DirBounds;
 use crate::direction::Axis;
-use crate::segment_bounds::SegmentBounds;
 
 use parry2d::na::Point2;
 
@@ -26,20 +26,8 @@ impl Stoplight {
         self.grace.is_some()
     }
 
-    pub fn bounds(&self) -> (SegmentBounds, SegmentBounds) {
-        SegmentBounds::stoplight(&self.pos, self.axis)
-    }
-
-    pub fn all_bounds(&self) -> (
-        SegmentBounds,
-        SegmentBounds,
-        SegmentBounds,
-        SegmentBounds,
-    ) {
-        let horizontal = SegmentBounds::stoplight(&self.pos, Axis::Horizontal);
-        let vertical   = SegmentBounds::stoplight(&self.pos, Axis::Vertical);
-
-        (horizontal.0, horizontal.1, vertical.0, vertical.1)
+    pub fn bounds(&self) -> DirBounds {
+        DirBounds::new(&self.pos)
     }
 
     pub fn update(&mut self, time: u32) {

@@ -96,6 +96,15 @@ pub enum Cardinal {
 }
 
 impl Cardinal {
+    pub fn rotate(&mut self) -> Self {
+        match self {
+            Self::Up    => Self::Right,
+            Self::Right => Self::Down,
+            Self::Down  => Self::Left,
+            Self::Left  => Self::Up,
+        }
+    }
+
     pub fn vector(&self) -> Vector2<f32> {
         match self {
             Self::Up    => Vector2::new( 0.0, -1.0),

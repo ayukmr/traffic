@@ -1,4 +1,5 @@
 use routing::direction::{Cardinal, Direction, TileDirection};
+use routing::stop_sign::StopSign;
 use routing::stoplight::Stoplight;
 use routing::tile::Tile;
 use routing::tile_map::{TileMap, TILE_SIZE_F};
@@ -162,6 +163,10 @@ fn main() -> Result<()> {
         Stoplight::new(Point2::new(6.5, 1.5), 10.0),
     ];
 
+    let mut stop_signs = vec![
+        // StopSign::new(Point2::new(6.5, 1.5)),
+    ];
+
     let (mut renderer, event_loop) = Renderer::new()?;
 
     let mut time = 0;
@@ -191,7 +196,11 @@ fn main() -> Result<()> {
                                 .chain(right.as_ref())
                                 .collect::<Vec<_>>();
 
-                        vehicle.update(&vehicles, &tiles, &stoplights).unwrap();
+                        vehicle.update(&vehicles, &tiles, &stop_signs, &stoplights).unwrap();
+                    }
+
+                    for stop_sign in &mut stop_signs {
+                        stop_sign.update(&vehicles);
                     }
 
                     for stoplight in &mut stoplights {
