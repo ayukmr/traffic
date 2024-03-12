@@ -15,6 +15,8 @@ pub struct TextureLoader {
     turn:         Image,
     intersection: Image,
 
+    pub stop_signs: Image,
+
     stoplight:       Image,
     stoplight_grace: Image,
     stoplight_stop:  Image,
@@ -28,6 +30,8 @@ impl TextureLoader {
             straight:     load_image(include_bytes!("assets/straight.png"))?,
             turn:         load_image(include_bytes!("assets/turn.png"))?,
             intersection: load_image(include_bytes!("assets/intersection.png"))?,
+
+            stop_signs: load_image(include_bytes!("assets/stop-signs.png"))?,
 
             stoplight:       load_image(include_bytes!("assets/stoplight.png"))?,
             stoplight_grace: load_image(include_bytes!("assets/stoplight-grace.png"))?,

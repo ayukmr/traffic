@@ -1,6 +1,7 @@
 use crate::texture_loader::TextureLoader;
 
 use routing::vehicle::Vehicle;
+use routing::stop_sign::StopSign;
 use routing::stoplight::Stoplight;
 use routing::tile::Tile;
 use routing::tile_map::{TILE_SIZE_F, TileMap};
@@ -205,6 +206,7 @@ impl Renderer {
         &mut self,
         vehicles:   &[Vehicle],
         tiles:      &TileMap<Tile>,
+        stop_signs: &[StopSign],
         stoplights: &[Stoplight],
     ) -> Result<()> {
         let canvas = self.surface.canvas();
@@ -234,6 +236,15 @@ impl Renderer {
             canvas.rotate(deg, Some(rot_pos));
             canvas.draw_image(img, img_pos, None);
             canvas.rotate(-deg, Some(rot_pos));
+        }
+
+        for stop_sign in stop_signs {
+            let img_pos = Point::new(
+                ((stop_sign.pos.x as f32 - 0.5) * TILE_SIZE_F) * SCALE,
+                ((stop_sign.pos.y as f32 - 1.0) * TILE_SIZE_F) * SCALE + offset,
+            );
+
+            canvas.draw_image(&self.loader.stop_signs, img_pos, None);
         }
 
         for stoplight in stoplights {

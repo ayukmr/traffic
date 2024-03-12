@@ -226,6 +226,13 @@ fn main() -> Result<()> {
                     }
 
                     renderer.update(&vehicles, &tiles, &stoplights).unwrap();
+
+                    renderer.update(
+                        &vehicles,
+                        &tiles,
+                        &stop_signs,
+                        &stoplights,
+                    ).unwrap();
                 }
 
                 _ => {}

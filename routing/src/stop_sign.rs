@@ -6,7 +6,7 @@ use crate::dir_bounds::DirBounds;
 use parry2d::na::{Point2, Vector2};
 
 pub struct StopSign {
-    pos: Point2<f32>,
+    pub pos: Point2<f32>,
     pub dir: Cardinal,
     moved_inside: bool,
 }
