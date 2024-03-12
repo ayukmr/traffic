@@ -48,16 +48,21 @@ impl StopSign {
             self.moved_inside = true;
         }
 
-        let rotated = self.dir.rotate();
+        let mut dir = self.dir;
 
-        let should_rotate =
-            !any_inside &&
-            (self.moved_inside || !self.vehicle_outside(vehicles, self.dir)) &&
-            self.vehicle_outside(vehicles, rotated);
+        for _ in 0..3 {
+            dir = dir.rotate();
 
-        if should_rotate {
-            self.dir = rotated;
-            self.moved_inside = false;
+            let should_rotate =
+                !any_inside &&
+                (self.moved_inside || !self.vehicle_outside(vehicles, self.dir)) &&
+                self.vehicle_outside(vehicles, dir);
+
+            if should_rotate {
+                self.dir = dir;
+                self.moved_inside = false;
+                break;
+            }
         }
     }
 
